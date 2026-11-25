@@ -11,9 +11,9 @@ export default async function Activity() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role); const o = org.id;
   const [rows, f, l, d, p, s] = await Promise.all([loadActivity(sb, o),
-    sb.from("emission_factors").select("id,name,unit,source,publication_year,geography").or(`organisation_id.is.null,organisation_id.eq.${o}`).eq("is_active", true).order("name"),
-    sb.from("locations").select("id,name").eq("organisation_id", o), sb.from("departments").select("id,name").eq("organisation_id", o),
-    sb.from("reporting_periods").select("id,label").eq("organisation_id", o), sb.from("suppliers").select("id,name").eq("organisation_id", o)]);
+    sb.from("cb_emission_factors").select("id,name,unit,source,publication_year,geography").or(`organisation_id.is.null,organisation_id.eq.${o}`).eq("is_active", true).order("name"),
+    sb.from("cb_locations").select("id,name").eq("organisation_id", o), sb.from("cb_departments").select("id,name").eq("organisation_id", o),
+    sb.from("cb_reporting_periods").select("id,label").eq("organisation_id", o), sb.from("cb_suppliers").select("id,name").eq("organisation_id", o)]);
   const opt = (x: any) => (x.data ?? []).map((r: any) => ({ value: r.id, label: r.name ?? r.label }));
   return (<>
     <PageHeader title="Activity Data" copy="Emissions = Activity Data x Emission Factor. Every record stores the quantity, unit, factor, source and result.">

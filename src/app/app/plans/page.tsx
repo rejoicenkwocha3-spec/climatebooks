@@ -6,8 +6,8 @@ export const metadata = { title: "Reduction Plans" };
 export default async function Plans() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role);
-  const [{ data: items }, { data: targets }] = await Promise.all([sb.from("reduction_initiatives").select("*, climate_targets(name)").eq("organisation_id", org.id).order("created_at", { ascending: false }),
-    sb.from("climate_targets").select("id,name").eq("organisation_id", org.id)]);
+  const [{ data: items }, { data: targets }] = await Promise.all([sb.from("cb_reduction_initiatives").select("*, climate_targets:cb_climate_targets(name)").eq("organisation_id", org.id).order("created_at", { ascending: false }),
+    sb.from("cb_climate_targets").select("id,name").eq("organisation_id", org.id)]);
   const planned = (items ?? []).filter((i: any) => i.status !== "cancelled").reduce((t: number, i: any) => t + Number(i.expected_reduction_kgco2e ?? 0), 0);
   return (<>
     <PageHeader title="Reduction Plans" copy="Track the initiatives that deliver your targets. Expected reductions are estimates until measured." />

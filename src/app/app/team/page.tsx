@@ -6,7 +6,7 @@ export const metadata = { title: "Team" };
 export default async function Team() {
   const { sb, org, user } = await currentOrg(); if (!org) return <NoOrg />;
   const admin = ["owner", "admin"].includes(org.role);
-  const { data } = await sb.from("organisation_members").select("user_id, role, profiles(full_name,email)").eq("organisation_id", org.id);
+  const { data } = await sb.from("cb_organisation_members").select("user_id, role, profiles:cb_profiles(full_name,email)").eq("organisation_id", org.id);
   return (<><PageHeader title="Team" copy="Owners and admins manage access. Editors can change data. Viewers have read only access." />
     {admin && <Panel title="Add a member" className="mb-6"><ActionForm action={addMember} submit="Add member"><Field label="Email of an existing ClimateBooks user" name="email" type="email" required />
       <Select label="Role" name="role" required defaultValue="viewer" options={[{ value: "admin", label: "Admin" }, { value: "editor", label: "Editor" }, { value: "viewer", label: "Viewer" }]} /></ActionForm></Panel>}

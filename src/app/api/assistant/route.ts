@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
 
   const rows = await loadActivity(sb, org.id);
   const [{ data: targets }, { data: inits }, { data: subs }] = await Promise.all([
-    sb.from("climate_targets").select("name,target_type,baseline_year,target_year,reduction_percent,scope_coverage").eq("organisation_id", org.id),
-    sb.from("reduction_initiatives").select("title,status,expected_reduction_kgco2e,basis").eq("organisation_id", org.id),
-    sb.from("supplier_submissions").select("reported_kgco2e,status").eq("organisation_id", org.id)]);
+    sb.from("cb_climate_targets").select("name,target_type,baseline_year,target_year,reduction_percent,scope_coverage").eq("organisation_id", org.id),
+    sb.from("cb_reduction_initiatives").select("title,status,expected_reduction_kgco2e,basis").eq("organisation_id", org.id),
+    sb.from("cb_supplier_submissions").select("reported_kgco2e,status").eq("organisation_id", org.id)]);
   const med = (a: number[]) => { const s = [...a].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
   const catMed = new Map<string, number>(); groupT(rows, (r) => r.category).forEach((g) => catMed.set(g.name, med(rows.filter((r) => r.category === g.name).map((r) => r.kg))));
   const unusual = rows.filter((r) => { const m = catMed.get(r.category) ?? 0; return rows.filter((x) => x.category === r.category).length >= 4 && m > 0 && r.kg > 5 * m; })

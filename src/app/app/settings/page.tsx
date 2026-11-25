@@ -6,7 +6,7 @@ import { updateProfile } from "../actions";
 export const metadata = { title: "Settings" };
 export default async function Settings() {
   const { sb, user } = await requireUser();
-  const { data: p } = await sb.from("profiles").select("*").eq("id", user.id).single();
+  const { data: p } = await sb.from("cb_profiles").select("*").eq("id", user.id).single();
   return (<><PageHeader title="Settings" />
     <Panel title="Profile"><ActionForm action={updateProfile} submit="Save profile"><Field label="Full name" name="full_name" defaultValue={p?.full_name ?? ""} /><Field label="Job title" name="job_title" defaultValue={p?.job_title ?? ""} />
       <Field label="Email" name="email"><input className="input" value={user.email ?? ""} disabled readOnly /></Field></ActionForm></Panel>

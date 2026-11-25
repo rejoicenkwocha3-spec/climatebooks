@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
 
   const db = supabaseAdmin();
   const cancelled = /cancel|expire|fail|refund/.test(event);
-  const { data: user } = await db.from("profiles").select("id").ilike("email", email).maybeSingle();
+  const { data: user } = await db.from("cb_profiles").select("id").ilike("email", email).maybeSingle();
   const end = new Date(Date.now() + 31 * 86400000).toISOString();
-  const { error } = await db.from("subscriptions").upsert({ buyer_email: email, user_id: user?.id ?? null, plan_key: plan, status: cancelled ? "cancelled" : "active", selar_reference: ref, current_period_end: end }, { onConflict: "selar_reference" });
+  const { error } = await db.from("cb_subscriptions").upsert({ buyer_email: email, user_id: user?.id ?? null, plan_key: plan, status: cancelled ? "cancelled" : "active", selar_reference: ref, current_period_end: end }, { onConflict: "selar_reference" });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
 }

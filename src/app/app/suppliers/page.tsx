@@ -6,9 +6,9 @@ export const metadata = { title: "Suppliers" };
 export default async function Suppliers() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role);
-  const [{ data: sup }, { data: subs }, { data: periods }] = await Promise.all([sb.from("suppliers").select("*").eq("organisation_id", org.id).order("name"),
-    sb.from("supplier_submissions").select("*, suppliers(name)").eq("organisation_id", org.id).order("created_at", { ascending: false }),
-    sb.from("reporting_periods").select("id,label").eq("organisation_id", org.id)]);
+  const [{ data: sup }, { data: subs }, { data: periods }] = await Promise.all([sb.from("cb_suppliers").select("*").eq("organisation_id", org.id).order("name"),
+    sb.from("cb_supplier_submissions").select("*, suppliers:cb_suppliers(name)").eq("organisation_id", org.id).order("created_at", { ascending: false }),
+    sb.from("cb_reporting_periods").select("id,label").eq("organisation_id", org.id)]);
   return (<>
     <PageHeader title="Suppliers" copy="Manage suppliers, record the emissions data they send and review each submission before relying on it." />
     {w && <div className="mb-6 grid gap-6 lg:grid-cols-2">

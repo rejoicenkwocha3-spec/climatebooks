@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(body, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": 'attachment; filename="activity-data.csv"' } });
   }
   if (kind === "report") {
-    const { data: rep } = await sb.from("reports").select("*").eq("id", p.get("id") ?? "").eq("organisation_id", org.id).single();
+    const { data: rep } = await sb.from("cb_reports").select("*").eq("id", p.get("id") ?? "").eq("organisation_id", org.id).single();
     if (!rep) return NextResponse.json({ error: "Report not found" }, { status: 404 });
     const s = rep.snapshot as any; const T = s.totals_kgco2e;
     if (p.get("format") === "pdf") {

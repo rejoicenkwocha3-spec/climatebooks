@@ -10,7 +10,7 @@ export const metadata = { title: "Climate Targets" };
 export default async function Targets() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role);
-  const [rows, { data: targets }] = await Promise.all([loadActivity(sb, org.id), sb.from("climate_targets").select("*").eq("organisation_id", org.id).order("created_at")]);
+  const [rows, { data: targets }] = await Promise.all([loadActivity(sb, org.id), sb.from("cb_climate_targets").select("*").eq("organisation_id", org.id).order("created_at")]);
   const years = byYear(rows); const s = [1, 2, 3].map((n) => sum(rows.filter((r) => r.scope === n)));
   return (<>
     <PageHeader title="Climate Targets" copy="Set baseline and target years and track progress. Setting a target does not make an organisation net zero." />

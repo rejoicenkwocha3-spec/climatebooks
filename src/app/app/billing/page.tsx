@@ -4,7 +4,7 @@ import { PLANS } from "@/config/plans";
 export const metadata = { title: "Billing" };
 export default async function Billing() {
   const { sb } = await requireUser();
-  const { data: subs } = await sb.from("subscriptions").select("*").order("created_at", { ascending: false });
+  const { data: subs } = await sb.from("cb_subscriptions").select("*").order("created_at", { ascending: false });
   const active = subs?.find((s: any) => s.status === "active" && (!s.current_period_end || new Date(s.current_period_end) > new Date()));
   const plan = PLANS.find((p) => p.key === active?.plan_key);
   return (<><PageHeader title="Billing" copy="Subscriptions are activated only when Selar confirms payment to ClimateBooks. Clicking a checkout button never grants access." />
