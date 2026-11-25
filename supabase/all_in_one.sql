@@ -25,8 +25,6 @@ drop trigger if exists cb_on_auth_user_created on auth.users;
 create trigger cb_on_auth_user_created after insert on auth.users
   for each row execute function public.cb_handle_new_user();
 
--- Backfill profiles for users that already exist in this shared Supabase project
--- (run after the cb_profiles table is created; placed below)
 -- ───────── Organisations & membership ─────────
 create table if not exists public.cb_organisations (
   id uuid primary key default gen_random_uuid(),
@@ -49,6 +47,7 @@ create table if not exists public.cb_organisation_members (
   primary key (organisation_id, user_id)
 );
 
+-- Backfill profiles for users that already exist in this shared Supabase project
 insert into public.cb_profiles (id, email) select id, email from auth.users on conflict (id) do nothing;
 
 create or replace function public.cb_is_member(org uuid) returns boolean
@@ -199,7 +198,7 @@ create table if not exists public.cb_reduction_initiatives (
   created_at timestamptz not null default now()
 );
 
--- ───────── Reports, cb_documents, cb_notifications ─────────
+-- ───────── Reports, documents, notifications ─────────
 create table if not exists public.cb_reports (
   id uuid primary key default gen_random_uuid(),
   organisation_id uuid not null references public.cb_organisations(id) on delete cascade,
@@ -312,7 +311,7 @@ declare t text;
 begin
   foreach t in array array['cb_locations','cb_departments','cb_reporting_periods','cb_activity_records',
     'cb_emissions_calculations','cb_suppliers','cb_supplier_submissions','cb_climate_targets',
-    'cb_reduction_initiatives','cb_reports','cb-documents']
+    'cb_reduction_initiatives','cb_reports','cb_documents']
   loop
     execute format('alter table public.%I enable row level security', t);
     execute format('drop policy if exists %1$s_select on public.%1$s', t);
