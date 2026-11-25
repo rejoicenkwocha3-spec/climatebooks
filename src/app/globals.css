@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { --font-inter: "Inter"; --font-manrope: "Manrope"; }
+html { scroll-behavior: smooth; }
+body { @apply bg-offwhite text-charcoal font-sans antialiased; }
+h1, h2, h3, h4 { @apply font-display tracking-tight text-emerald; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold disabled:opacity-60 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-forest text-white hover:bg-emerald; }
+  .btn-gold { @apply btn bg-gold text-emerald hover:brightness-95; }
+  .btn-outline { @apply btn border border-forest/30 text-forest bg-white hover:bg-forest/5; }
+  .btn-danger { @apply btn border border-red-200 text-red-700 bg-white hover:bg-red-50; }
+  .btn-sm { @apply px-3 py-1.5 text-xs; }
+  .card { @apply rounded-xl border border-forest/10 bg-white shadow-card; }
+  .input { @apply w-full rounded-lg border border-forest/20 bg-white px-3 py-2 text-sm text-charcoal placeholder:text-charcoal/40 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20; }
+  .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-charcoal/70; }
+  .container-x { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .section { @apply py-16 sm:py-24; }
+  .badge { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .th { @apply px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-charcoal/60; }
+  .td { @apply px-3 py-2.5 text-sm; }
+}
