@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { currentOrg } from "@/lib/auth";
+import { apiUser, currentOrg } from "@/lib/auth";
 import { loadActivity } from "@/lib/data";
 
 const csvCell = (v: unknown) => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
@@ -8,6 +8,7 @@ const csv = (rows: unknown[][]) => rows.map((r) => r.map(csvCell).join(",")).joi
 const t = (kg: number) => (kg / 1000).toFixed(3);
 
 export async function GET(req: NextRequest) {
+  if (!(await apiUser())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { sb, org } = await currentOrg();
   if (!org) return NextResponse.json({ error: "No organisation" }, { status: 400 });
   const p = req.nextUrl.searchParams; const kind = p.get("kind");

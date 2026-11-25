@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { currentOrg } from "@/lib/auth";
+import { apiUser, currentOrg } from "@/lib/auth";
 import { byYear, groupT, loadActivity, quality, sum } from "@/lib/data";
 
 const SYSTEM = `You are the ClimateBooks AI Climate Assistant.
@@ -12,6 +12,7 @@ Rules you must follow:
 - Be concise. Use plain text with short lists. Do not use emojis.`;
 
 export async function POST(req: NextRequest) {
+  if (!(await apiUser())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { sb, org } = await currentOrg();
   if (!org) return NextResponse.json({ error: "Create an organisation first." }, { status: 400 });
   const key = process.env.ANTHROPIC_API_KEY;

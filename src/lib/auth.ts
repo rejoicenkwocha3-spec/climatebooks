@@ -19,3 +19,10 @@ export async function currentOrg() {
   return { sb, user, org, orgs: list as any[] };
 }
 export const canWrite = (role?: string) => role === "owner" || role === "admin" || role === "editor";
+
+/** For API routes: JSON 401 instead of a redirect. */
+export async function apiUser() {
+  const sb = await supabaseServer();
+  const { data: { user } } = await sb.auth.getUser();
+  return user;
+}
