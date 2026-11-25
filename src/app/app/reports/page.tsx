@@ -8,8 +8,8 @@ const FRAMEWORKS = ["GHG Protocol", "CDP", "CSRD", "ESRS", "ISSB", "SECR"];
 export default async function Reports() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role);
-  const [{ data: periods }, { data: reports }] = await Promise.all([sb.from("cb_reporting_periods").select("id,label").eq("organisation_id", org.id),
-    sb.from("cb_reports").select("*").eq("organisation_id", org.id).order("created_at", { ascending: false })]);
+  const [{ data: periods }, { data: reports }] = await Promise.all([sb.from("cbk_reporting_periods").select("id,label").eq("organisation_id", org.id),
+    sb.from("cbk_reports").select("*").eq("organisation_id", org.id).order("created_at", { ascending: false })]);
   return (<>
     <PageHeader title="Reports" copy="Generate a report snapshot from your recorded data. Framework selection structures the report only: ClimateBooks does not certify regulatory compliance." />
     {w && <Panel title="Generate a report" className="mb-6"><ActionForm action={createReport} submit="Generate report">

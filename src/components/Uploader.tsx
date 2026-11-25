@@ -10,7 +10,7 @@ export function Uploader({ orgId }: { orgId: string }) {
     if (file.size > 20 * 1024 * 1024) return setErr("Files must be 20 MB or smaller.");
     setBusy(true);
     const path = `${orgId}/${crypto.randomUUID()}-${file.name.replace(/[^\w.\-]/g, "_")}`;
-    const { error } = await supabaseBrowser().storage.from("cb-documents").upload(path, file, { contentType: file.type || undefined });
+    const { error } = await supabaseBrowser().storage.from("cbk-documents").upload(path, file, { contentType: file.type || undefined });
     if (error) { setErr(error.message); setBusy(false); return; }
     const e2 = await recordDocument(orgId, file.name, path, file.size, file.type); if (e2) setErr(e2);
     setBusy(false); e.target.value = ""; router.refresh();

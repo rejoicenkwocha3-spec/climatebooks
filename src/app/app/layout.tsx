@@ -4,7 +4,7 @@ import { selectOrg } from "./actions";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const { sb, user, org, orgs } = await currentOrg();
-  const { count } = await sb.from("cb_notifications").select("id", { count: "exact", head: true }).eq("is_read", false).eq("user_id", user.id);
+  const { count } = await sb.from("cbk_notifications").select("id", { count: "exact", head: true }).eq("is_read", false).eq("user_id", user.id);
   return (
     <div className="flex min-h-screen">
       <Sidebar unread={count ?? 0} />

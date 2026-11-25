@@ -7,8 +7,8 @@ export const metadata = { title: "Organisations" };
 export default async function Organisations() {
   const { sb, org, orgs } = await currentOrg();
   const [loc, dep, per] = org ? await Promise.all([
-    sb.from("cb_locations").select("*").eq("organisation_id", org.id).order("name"), sb.from("cb_departments").select("*").eq("organisation_id", org.id).order("name"),
-    sb.from("cb_reporting_periods").select("*").eq("organisation_id", org.id).order("start_date", { ascending: false })]) : [];
+    sb.from("cbk_locations").select("*").eq("organisation_id", org.id).order("name"), sb.from("cbk_departments").select("*").eq("organisation_id", org.id).order("name"),
+    sb.from("cbk_reporting_periods").select("*").eq("organisation_id", org.id).order("start_date", { ascending: false })]) : [];
   const w = canWrite(org?.role), admin = org && ["owner", "admin"].includes(org.role);
   return (
     <>

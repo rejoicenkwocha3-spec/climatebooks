@@ -5,7 +5,7 @@ export type Row = {
 };
 const one = (x: any) => (Array.isArray(x) ? x[0] : x);
 export async function loadActivity(sb: any, orgId: string, scope?: number): Promise<Row[]> {
-  let q = sb.from("cb_activity_records").select("*, emissions_calculations:cb_emissions_calculations(result_kgco2e, factor_source, factor_value, factor_unit), locations:cb_locations(name), departments:cb_departments(name), suppliers:cb_suppliers(name), reporting_periods:cb_reporting_periods(label)")
+  let q = sb.from("cbk_activity_records").select("*, emissions_calculations:cbk_emissions_calculations(result_kgco2e, factor_source, factor_value, factor_unit), locations:cbk_locations(name), departments:cbk_departments(name), suppliers:cbk_suppliers(name), reporting_periods:cbk_reporting_periods(label)")
     .eq("organisation_id", orgId).order("activity_date", { ascending: false }).limit(5000);
   if (scope) q = q.eq("scope", scope);
   const { data } = await q;

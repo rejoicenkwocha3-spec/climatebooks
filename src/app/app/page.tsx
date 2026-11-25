@@ -9,8 +9,8 @@ export default async function Overview() {
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const rows = await loadActivity(sb, org.id);
   const [{ data: periods }, { data: targets }] = await Promise.all([
-    sb.from("cb_reporting_periods").select("*").eq("organisation_id", org.id).eq("status", "open").not("due_date", "is", null).order("due_date").limit(5),
-    sb.from("cb_climate_targets").select("*").eq("organisation_id", org.id).order("created_at").limit(1)]);
+    sb.from("cbk_reporting_periods").select("*").eq("organisation_id", org.id).eq("status", "open").not("due_date", "is", null).order("due_date").limit(5),
+    sb.from("cbk_climate_targets").select("*").eq("organisation_id", org.id).order("created_at").limit(1)]);
   const total = sum(rows), s = [1, 2, 3].map((n) => sum(rows.filter((r) => r.scope === n)));
   const years = byYear(rows), q = quality(rows);
   const last = years[years.length - 1], prev = years[years.length - 2];

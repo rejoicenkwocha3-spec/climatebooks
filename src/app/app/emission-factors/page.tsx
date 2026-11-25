@@ -9,7 +9,7 @@ export default async function Factors({ searchParams }: { searchParams: Promise<
   const { q } = await searchParams;
   const { sb, org } = await currentOrg(); if (!org) return <NoOrg />;
   const w = canWrite(org.role);
-  let query = sb.from("cb_emission_factors").select("*").or(`organisation_id.is.null,organisation_id.eq.${org.id}`).order("name").order("version", { ascending: false });
+  let query = sb.from("cbk_emission_factors").select("*").or(`organisation_id.is.null,organisation_id.eq.${org.id}`).order("name").order("version", { ascending: false });
   if (q) query = query.or(`name.ilike.%${q.replace(/[%,]/g, "")}%,category.ilike.%${q.replace(/[%,]/g, "")}%,source.ilike.%${q.replace(/[%,]/g, "")}%`);
   const { data } = await query;
   return (<>

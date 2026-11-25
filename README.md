@@ -5,7 +5,7 @@ AI powered climate accounting and sustainability SaaS. Next.js 15, TypeScript, T
 ## Setup
 1. `npm install`
 2. Copy `.env.example` to `.env.local` and fill it in.
-3. In the Supabase SQL editor run, in order: `supabase/migrations/001_schema.sql`, `002_team.sql`.
+3. In the Supabase SQL editor run, in order: `supabase/migrations/`supabase/all_in_one.sql` (all ClimateBooks objects use the `cbk_` prefix so they coexist with other apps).
 4. Supabase Auth settings: set Site URL to your deployed URL and add `<site>/auth/callback` to Redirect URLs.
 5. `npm run dev`
 
