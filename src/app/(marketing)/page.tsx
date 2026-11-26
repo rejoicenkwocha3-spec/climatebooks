@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight, Calculator, Layers, BarChart3, FileText, Sparkles, Target, Users, Gauge } from "lucide-react";
-import { DashboardPreview } from "@/components/DashboardPreview";
 import { CtaBand, FeatureCard, SectionTitle } from "@/components/Marketing";
 import { PLANS } from "@/config/plans";
 
@@ -8,8 +7,8 @@ export default function Home() {
   return (
     <>
       <section className="bg-emerald text-white">
-        <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24">
-          <div>
+        <div className="container-x py-20 lg:py-28">
+          <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-widest text-gold">Climate accounting platform</p>
             <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-6xl">Climate Intelligence. Measurable Impact.</h1>
             <p className="mt-6 max-w-xl text-lg text-white/80">ClimateBooks helps businesses measure their carbon footprint, manage sustainability data and create meaningful climate reports with intelligent AI powered tools.</p>
@@ -18,7 +17,6 @@ export default function Home() {
               <Link href="/platform" className="btn bg-white/10 text-white hover:bg-white/20">Explore Platform</Link>
             </div>
           </div>
-          <DashboardPreview />
         </div>
       </section>
 
