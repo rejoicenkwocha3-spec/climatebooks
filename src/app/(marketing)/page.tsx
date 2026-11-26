@@ -14,7 +14,7 @@ export default function Home() {
             <p className="mt-6 max-w-xl text-lg text-white/80">ClimateBooks helps businesses measure their carbon footprint, manage sustainability data and create meaningful climate reports with intelligent AI powered tools.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/signup" className="btn-gold">Get Started <ArrowRight size={16} /></Link>
-              <Link href="/platform" className="btn bg-white/10 text-white hover:bg-white/20">Explore Platform</Link>
+              <Link href="/login" className="btn bg-white/10 text-white hover:bg-white/20">Sign in</Link>
             </div>
           </div>
         </div>
